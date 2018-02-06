@@ -1,0 +1,92 @@
+[
+    {
+      "category": "tools",
+      "url": "https:\/\/www.youtube.com\/watch?v=sjpbu4y6F_M&list=PLOU2XLYxmsILvfJcIASBDbgfxloFz_XsU&index=5",
+      "tip": "If you don't know how to code, you can use templates to build an App! Learn more about it in our Build an App for the Google Assistant with Templates and No Code video.",
+      "created_at": "2017-12-25T08:00:00.000Z"
+    },
+    {
+      "category": "voice user interface",
+      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices",
+      "timestamp": "2017-12-21T08:00:00.000Z",
+      "tip": "Remember that your users may need your app to repeat itself at any time, so keep track of your last prompt and be prepared to repeat it."
+    },
+    {
+      "tip": "The Actions On Google client library for Dialogflow and Actions SDK is a nodejs module that helps you build your fulfillment whether you're using Dialogflow or the Actions SDK. ",
+      "created_at": "2017-12-19T08:00:00.000Z",
+      "category": "tools",
+      "url": "https:\/\/github.com\/actions-on-google\/actions-on-google-nodejs"
+    },
+    {
+      "tip": "Use SSML, or speech synthesis markup language, to improve the quality of your app with features like custom audio and granular speech synthesis controls.",
+      "created_at": "2017-12-17T08:00:00.000Z",
+      "category": "voice user interface",
+      "url": "https:\/\/developers.google.com\/actions\/reference\/ssml"
+    },
+    {
+      "category": "voice user interface",
+      "url": "https:\/\/www.youtube.com\/watch?v=cHEahGHseGc&list=PLOU2XLYxmsILvfJcIASBDbgfxloFz_XsU&t=1s&index=4",
+      "tip": "When designing a voice user interface, you should avoid simply converting a graphical user interface to a voice user interface. Learn more tips about designing VUI watching our \"How to better design VUI for the Google Assistant\" video.",
+      "created_at": "2017-12-13T08:00:00.000Z"
+    },
+    {
+      "category": "Dialogflow",
+      "url": "https:\/\/developers.google.com\/actions\/dialogflow\/define-actions#define_additional_actions",
+      "tip": "If using Dialogflow, you can specify additional actions for your app as additional triggering intents in the Assistant Integrations page. The user says phrases of those triggering intents will also be used for app discovery.",
+      "created_at": "2017-12-11T08:00:00.000Z"
+    },
+    {
+      "category": "development",
+      "url": "https:\/\/developers.google.com\/actions\/reference\/rest\/Shared.Types\/AppRequest#Conversation",
+      "tip": "Use the data property of our client library interface to persist data within a dialog. It uses the conversation Token field of the conversation API request and response. ",
+      "created_at": "2017-12-09T08:00:00.000Z"
+    },
+    {
+      "tip": "The most common cause for app rejection during review is incomplete store listing data. Learn more tips about passing the review in our How to Publish an App for the Google Assistant that Will Pass Review video.",
+      "created_at": "2017-12-08T08:00:00.000Z",
+      "category": "development",
+      "url": "https:\/\/www.youtube.com\/watch?v=GKP4AS4L_K8&list=PLOU2XLYxmsILvfJcIASBDbgfxloFz_XsU&t=1s&index=3"
+    },
+    {
+      "category": "development",
+      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices",
+      "tip": "Use the last Seen property of the incoming request to determine return users, and greet them differently than new users.",
+      "created_at": "2017-12-07T08:00:00.000Z"
+    },
+    {
+      "category": "Dialogflow",
+      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices",
+      "tip": "If using Dialogflow, provide at least 10-12 examples of User Says phrases for your intents.",
+      "created_at": "2017-12-06T08:00:00.000Z"
+    },
+    {
+      "tip": "You can learn all the best practices for Actions on Google watching videos from the Actions On Google Best Practices Video Series.",
+      "created_at": "2017-12-05T08:00:00.000Z",
+      "category": "development",
+      "url": "https:\/\/developers.googleblog.com\/2017\/11\/actions-on-google-best-practices-video.html"
+    },
+    {
+      "tip": "When defining action phrases, try to make sure they have a verb and an object to improve the chances for discovery.",
+      "created_at": "2017-12-04T08:00:00.000Z",
+      "category": "development",
+      "url": "https:\/\/developers.google.com\/actions\/discovery\/implicit#writing_useful_action_invocation_phrases"
+    },
+    {
+      "tip": "Be prepared to help whenever your user asks for it, and when they do, give them some foothold into the conversation.",
+      "created_at": "2017-12-03T08:00:00.000Z",
+      "category": "voice user interface",
+      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices"
+    },
+    {
+      "category": "voice user interface",
+      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices",
+      "tip": "If a user provides some unrecognized input, first try a simple rapid reprompt like \"What was that?\" to keep the conversation moving quickly. As they continue to provide unrecognized input, expand the reprompting to be more clear until finally ending the conversation after 3 failures.",
+      "created_at": "2017-12-01T08:00:00.000Z"
+    },
+    {
+      "category": "tools",
+      "url": "https:\/\/developers.google.com\/actions\/tools\/sound-library\/",
+      "tip": "Use our sound library to insert custom audio through SSML. This makes your voice experience far more engaging!",
+      "created_at": "2017-12-02T08:00:00.000Z"
+    }
+  ]
