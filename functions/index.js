@@ -33,7 +33,8 @@ const Actions = {
 };
 /** Dialogflow Parameters {@link https://dialogflow.com/docs/actions-and-parameters#parameters} */
 const Parameters = {
-  CATEGORY: 'category'
+  CATEGORY: 'category',
+  UPDATE_INTENT: 'UPDATE_INTENT'
 };
 
 /** Collections and fields names in Firestore */
@@ -48,6 +49,7 @@ const FirestoreNames = {
   USER_ID: 'userId'
 };
 
+/** App strings */
 const RANDOM_CATEGORY = 'random';
 const RECENT_TIP = 'most recent';
 const TELL_LATEST_TIP_INTENT = 'tell_latest_tip';
@@ -59,7 +61,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
   console.log('Request headers: ' + JSON.stringify(request.headers));
   console.log('Request body: ' + JSON.stringify(request.body));
 
-  // Fulfill action business logic
+  // Retrieve and tell a tip from the database.
   function tellTip (app) {
     const category = app.getArgument(Parameters.CATEGORY);
     let tipsRef = db.collection(FirestoreNames.TIPS);
@@ -80,16 +82,22 @@ exports.aogTips = functions.https.onRequest((request, response) => {
         const richResponse = app.buildRichResponse()
           .addSimpleResponse(tip.get(FirestoreNames.TIP))
           .addBasicCard(card);
-          if (!app.userStorage[DAILY_NOTIFICATION_ASKED]) {
+          /**
+           * We ask only once to show that this should be limited to avoid annoying the user.
+           * In a real world app you want to be more sophisticated about this, for example
+           * re-ask after a certain period of time or number of interactions.
+           */
+           //if (!app.userStorage[DAILY_NOTIFICATION_ASKED]) {
             richResponse.addSuggestions('Send daily');
             app.userStorage[DAILY_NOTIFICATION_ASKED] = true;
-          }
+          //}
         app.ask(richResponse);
       }).catch(function (error) {
         throw new Error(error);
       });
   }
 
+  // Retrieve and tell the most recently added tip
   function tellLatestTip (app) {
     db.collection(FirestoreNames.TIPS)
       .orderBy(FirestoreNames.CREATED_AT, 'desc')
@@ -106,6 +114,11 @@ exports.aogTips = functions.https.onRequest((request, response) => {
         const richResponse = app.buildRichResponse()
           .addSimpleResponse(tip.get(FirestoreNames.TIP))
           .addBasicCard(card);
+          /**
+           * We ask only once to show that this should be limited to avoid annoying the user.
+           * In a real world app you want to be more sophisticated about this, for example
+           * re-ask after a certain period of time or number of interactions.
+           */
           if (!app.userStorage[PUSH_NOTIFICATION_ASKED]) {
             richResponse.addSuggestions('Alert me of new tips');
             app.userStorage[PUSH_NOTIFICATION_ASKED] = true;
@@ -116,6 +129,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
       });
   }
 
+  // Welcome message
   function welcome (app) {
     // get available categories to show in the welcome message and in the suggestion chips.
     db.collection(FirestoreNames.TIPS)
@@ -148,6 +162,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
       });
   }
 
+  // Confirm outcome of opt-in for daily updates.
   function finishUpdateSetup (app) {
     if (app.isUpdateRegistered()) {
       app.tell("Ok, I'll start giving you daily updates.");
@@ -156,16 +171,19 @@ exports.aogTips = functions.https.onRequest((request, response) => {
     }
   }
 
+  // Start opt-in flow for push notifications
   function setupPush (app) {
     app.askForUpdatePermission(TELL_LATEST_TIP_INTENT);
   }
 
+  // Save intent and user id if user gave consent.
   function finishPushSetup (app) {
+    const userID = app.getArgument('UPDATES_USER_ID');
     if (app.isPermissionGranted()) {
       db.collection(FirestoreNames.USERS)
         .add({
           [FirestoreNames.INTENT]: TELL_LATEST_TIP_INTENT,
-          [FirestoreNames.USER_ID]: app.getUser().userId
+          [FirestoreNames.USER_ID]: userID
         })
         .then(function (docRef) {
           app.tell("Ok, I'll start alerting you");
@@ -178,6 +196,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
     }
   }
 
+  // Start opt-in flow for daily updates
   function configureUpdates (app) {
     const category = app.getArgument(Parameters.CATEGORY);
     app.askToRegisterDailyUpdate(
@@ -186,6 +205,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
     );
   }
 
+  // Map of action from Dialogflow to handling function
   const actionMap = new Map();
   actionMap.set(Actions.TELL_TIP, tellTip);
   actionMap.set(Actions.TELL_LATEST_TIP, tellLatestTip);
@@ -197,11 +217,14 @@ exports.aogTips = functions.https.onRequest((request, response) => {
   app.handleRequest(actionMap);
 });
 
+/** 
+ * Everytime a tip is added to the Firestore DB, this function runs and sends
+ * notifications to the subscribed users.
+ **/
 exports.createTip = functions.firestore
   .document(`${FirestoreNames.TIPS}/{tipId}`)
   .onCreate(event => {
     const request = require('request');
-    // TODO: check if I can update to google-auth library
     const google = require('googleapis');
     const serviceAccount = require('./service-account.json');
     const jwtClient = new google.auth.JWT(
@@ -250,6 +273,7 @@ exports.createTip = functions.firestore
     return 0;
   });
 
+// Use this function to restore the content of the tips database.
 exports.restoreTipsDB = functions.https.onRequest((request, response) => {
   db.collection(FirestoreNames.TIPS)
     .get()
