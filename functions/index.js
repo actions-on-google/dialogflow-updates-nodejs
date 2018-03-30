@@ -82,15 +82,15 @@ exports.aogTips = functions.https.onRequest((request, response) => {
         const richResponse = app.buildRichResponse()
           .addSimpleResponse(tip.get(FirestoreNames.TIP))
           .addBasicCard(card);
-          /**
-           * We ask only once to show that this should be limited to avoid annoying the user.
-           * In a real world app you want to be more sophisticated about this, for example
-           * re-ask after a certain period of time or number of interactions.
-           */
-           //if (!app.userStorage[DAILY_NOTIFICATION_ASKED]) {
-            richResponse.addSuggestions('Send daily');
-            app.userStorage[DAILY_NOTIFICATION_ASKED] = true;
-          //}
+        /**
+         * We ask only once to show that this should be limited to avoid annoying the user.
+         * In a real world app you want to be more sophisticated about this, for example
+         * re-ask after a certain period of time or number of interactions.
+         */
+        if (!app.userStorage[DAILY_NOTIFICATION_ASKED]) {
+          richResponse.addSuggestions('Send daily');
+          app.userStorage[DAILY_NOTIFICATION_ASKED] = true;
+        }
         app.ask(richResponse);
       }).catch(function (error) {
         throw new Error(error);
@@ -114,15 +114,15 @@ exports.aogTips = functions.https.onRequest((request, response) => {
         const richResponse = app.buildRichResponse()
           .addSimpleResponse(tip.get(FirestoreNames.TIP))
           .addBasicCard(card);
-          /**
-           * We ask only once to show that this should be limited to avoid annoying the user.
-           * In a real world app you want to be more sophisticated about this, for example
-           * re-ask after a certain period of time or number of interactions.
-           */
-          if (!app.userStorage[PUSH_NOTIFICATION_ASKED]) {
-            richResponse.addSuggestions('Alert me of new tips');
-            app.userStorage[PUSH_NOTIFICATION_ASKED] = true;
-          }
+        /**
+         * We ask only once to show that this should be limited to avoid annoying the user.
+         * In a real world app you want to be more sophisticated about this, for example
+         * re-ask after a certain period of time or number of interactions.
+         */
+        if (!app.userStorage[PUSH_NOTIFICATION_ASKED]) {
+          richResponse.addSuggestions('Alert me of new tips');
+          app.userStorage[PUSH_NOTIFICATION_ASKED] = true;
+        }
         app.ask(richResponse);
       }).catch(function (error) {
         throw new Error(error);
@@ -217,7 +217,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
   app.handleRequest(actionMap);
 });
 
-/** 
+/**
  * Everytime a tip is added to the Firestore DB, this function runs and sends
  * notifications to the subscribed users.
  **/

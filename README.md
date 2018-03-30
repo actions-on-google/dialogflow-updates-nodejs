@@ -25,6 +25,7 @@ using Actions on Google.
 1. Click *Enable*. While testing this sample, you can keep the database world readable.
 1. To add tips to the newly created Firestore database, load in a browser `https://${REGION}-${PROJECT}.cloudfunctions.net/restoreTipsDB`.
 1. Go back to the [Actions on Google console](https://console.actions.google.com) and select the project that you have created for this sample.
+1. Follow the *Console Setup* instructions in the [Daily Updates](https://developers.google.com/actions/assistant/updates/daily) and the [Push Notifications](https://developers.google.com/actions/assistant/updates/notifications) documentation to enable daily updates and push notifications.
 1. Type `Talk to my test app` in the simulator, or say `OK Google, talk to my test app` to any Actions on Google enabled device signed into your developer account.
 1. To test daily updates, choose a category. After the tip, the app will show a suggestion chip to subscribe for daily updates.
 1. To test push notifications, choose to hear the latest tip. After the top, the app will show
