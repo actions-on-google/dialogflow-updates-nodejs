@@ -18,7 +18,7 @@ const { DialogflowApp } = require('actions-on-google');
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp();
 const db = admin.firestore();
 
 /** Dialogflow Actions {@link https://dialogflow.com/docs/actions-and-parameters#actions} */
@@ -223,7 +223,7 @@ exports.aogTips = functions.https.onRequest((request, response) => {
  **/
 exports.createTip = functions.firestore
   .document(`${FirestoreNames.TIPS}/{tipId}`)
-  .onCreate(event => {
+  .onCreate((snap, context) => {
     const request = require('request');
     const google = require('googleapis');
     const serviceAccount = require('./service-account.json');
