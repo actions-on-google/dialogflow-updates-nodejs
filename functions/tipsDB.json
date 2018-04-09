@@ -12,16 +12,16 @@
       "tip": "Remember that your users may need your app to repeat itself at any time, so keep track of your last prompt and be prepared to repeat it."
     },
     {
-      "tip": "The Actions On Google client library for Dialogflow and Actions SDK is a nodejs module that helps you build your fulfillment whether you're using Dialogflow or the Actions SDK. ",
-      "created_at": "2017-12-19T08:00:00.000Z",
       "category": "tools",
-      "url": "https:\/\/github.com\/actions-on-google\/actions-on-google-nodejs"
+      "url": "https:\/\/github.com\/actions-on-google\/actions-on-google-nodejs",
+      "tip": "The Actions On Google client library for Dialogflow and Actions SDK is a nodejs module that helps you build your fulfillment whether you're using Dialogflow or the Actions SDK. ",
+      "created_at": "2017-12-19T08:00:00.000Z"
     },
     {
-      "tip": "Use SSML, or speech synthesis markup language, to improve the quality of your app with features like custom audio and granular speech synthesis controls.",
-      "created_at": "2017-12-17T08:00:00.000Z",
       "category": "voice user interface",
-      "url": "https:\/\/developers.google.com\/actions\/reference\/ssml"
+      "url": "https:\/\/developers.google.com\/actions\/reference\/ssml",
+      "tip": "Use SSML, or speech synthesis markup language, to improve the quality of your app with features like custom audio and granular speech synthesis controls.",
+      "created_at": "2017-12-17T08:00:00.000Z"
     },
     {
       "category": "voice user interface",
@@ -30,7 +30,7 @@
       "created_at": "2017-12-13T08:00:00.000Z"
     },
     {
-      "category": "Dialogflow",
+      "category": "dialogflow",
       "url": "https:\/\/developers.google.com\/actions\/dialogflow\/define-actions#define_additional_actions",
       "tip": "If using Dialogflow, you can specify additional actions for your app as additional triggering intents in the Assistant Integrations page. The user says phrases of those triggering intents will also be used for app discovery.",
       "created_at": "2017-12-11T08:00:00.000Z"
@@ -42,10 +42,10 @@
       "created_at": "2017-12-09T08:00:00.000Z"
     },
     {
-      "tip": "The most common cause for app rejection during review is incomplete store listing data. Learn more tips about passing the review in our How to Publish an App for the Google Assistant that Will Pass Review video.",
-      "created_at": "2017-12-08T08:00:00.000Z",
       "category": "development",
-      "url": "https:\/\/www.youtube.com\/watch?v=GKP4AS4L_K8&list=PLOU2XLYxmsILvfJcIASBDbgfxloFz_XsU&t=1s&index=3"
+      "url": "https:\/\/www.youtube.com\/watch?v=GKP4AS4L_K8&list=PLOU2XLYxmsILvfJcIASBDbgfxloFz_XsU&t=1s&index=3",
+      "tip": "The most common cause for app rejection during review is incomplete store listing data. Learn more tips about passing the review in our How to Publish an App for the Google Assistant that Will Pass Review video.",
+      "created_at": "2017-12-08T08:00:00.000Z"
     },
     {
       "category": "development",
@@ -54,28 +54,28 @@
       "created_at": "2017-12-07T08:00:00.000Z"
     },
     {
-      "category": "Dialogflow",
+      "category": "dialogflow",
       "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices",
       "tip": "If using Dialogflow, provide at least 10-12 examples of User Says phrases for your intents.",
       "created_at": "2017-12-06T08:00:00.000Z"
     },
     {
+      "category": "development",
+      "url": "https:\/\/developers.googleblog.com\/2017\/11\/actions-on-google-best-practices-video.html",
       "tip": "You can learn all the best practices for Actions on Google watching videos from the Actions On Google Best Practices Video Series.",
-      "created_at": "2017-12-05T08:00:00.000Z",
-      "category": "development",
-      "url": "https:\/\/developers.googleblog.com\/2017\/11\/actions-on-google-best-practices-video.html"
+      "created_at": "2017-12-05T08:00:00.000Z"
     },
     {
+      "category": "development",
+      "url": "https:\/\/developers.google.com\/actions\/discovery\/implicit#writing_useful_action_invocation_phrases",
       "tip": "When defining action phrases, try to make sure they have a verb and an object to improve the chances for discovery.",
-      "created_at": "2017-12-04T08:00:00.000Z",
-      "category": "development",
-      "url": "https:\/\/developers.google.com\/actions\/discovery\/implicit#writing_useful_action_invocation_phrases"
+      "created_at": "2017-12-04T08:00:00.000Z"
     },
     {
-      "tip": "Be prepared to help whenever your user asks for it, and when they do, give them some foothold into the conversation.",
-      "created_at": "2017-12-03T08:00:00.000Z",
       "category": "voice user interface",
-      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices"
+      "url": "https:\/\/developers.google.com\/actions\/assistant\/best-practices",
+      "tip": "Be prepared to help whenever your user asks for it, and when they do, give them some foothold into the conversation.",
+      "created_at": "2017-12-03T08:00:00.000Z"
     },
     {
       "category": "voice user interface",
