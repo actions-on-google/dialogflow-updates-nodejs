@@ -164,7 +164,7 @@ app.intent('setup_push', (conv) => {
 // Save intent and user id if user gave consent.
 app.intent('finish_push_setup', (conv, params) => {
   if (conv.arguments.get('PERMISSION')) {
-    const userID = conv.user.id;
+    const userID = conv.arguments.get('UPDATES_USER_ID');
     return db.collection(FirestoreNames.USERS)
       .add({
         [FirestoreNames.INTENT]: TELL_LATEST_TIP_INTENT,
