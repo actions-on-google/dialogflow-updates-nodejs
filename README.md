@@ -1,56 +1,87 @@
-# Actions on Google: Updates API sample using Node.js and Cloud Functions for Firebase
+# Actions on Google: Daily Updates and Push Notifications Sample
 
-This sample shows an app that gives tips about developing apps for the Google Assistant
-using Actions on Google.
+This sample demonstrates Actions on Google features for use on Google Assistant including [user engagement](https://developers.google.com/actions/assistant/updates/overview), specifically [daily updates](https://developers.google.com/actions/assistant/updates/daily) and [push notifications](https://developers.google.com/actions/assistant/updates/notifications) -- using the [Node.js client library](https://github.com/actions-on-google/actions-on-google-nodejs) and deployed on [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/).
 
 ## Setup Instructions
+### Prerequisites
+1. Node.js and NPM
+    + We recommend installing using [NVM](https://github.com/creationix/nvm)
+1. Install the [Firebase CLI](https://developers.google.com/actions/dialogflow/deploy-fulfillment)
+    + We recommend using version 6.5.0, `npm install -g firebase-tools@6.5.0`
+    + Run `firebase login` with your Google account
 
-### Steps
-1. Use the [Actions on Google Console](https://console.actions.google.com) to add a new project with a name of your choosing and click *Create Project*.
-1. Scroll down to the *More Options* section, and click on the *Conversational* card.
-1. On the left navigation menu under *BUILD*, click on *Actions*. Click on *Add Your First Action* and choose your app's language(s).
-1. Select *Custom intent*, click *BUILD*. This will open a Dialogflow console. Click *CREATE*.
-1. Click on the gear icon to see the project settings.
-1. Select *Export and Import*.
-1. Select *Restore from zip*. Follow the directions to restore from the `AoG-Tips.zip` file in this repo.
+### Configuration
+#### Actions Console
+1. From the [Actions on Google Console](https://console.actions.google.com/), add a new project > **Create Project** > under **More options** > **Conversational**
+1. From the left navigation menu under **Build** > **Actions** > **Add Your First Action** > **BUILD** (this will bring you to the Dialogflow console) > Select language and time zone > **CREATE**.
+1. In the Dialogflow console, go to **Settings** ⚙ > **Export and Import** > **Restore from zip** using the `agent.zip` in this sample's directory.
 
-1. Go to the [Google Cloud Platform console](https://console.developers.google.com/apis/api/actions.googleapis.com/overview) to activate the Actions API, and select the project that you have created on the Actions on Google console. Then, click the *Enable* button.
+#### Daily Updates and Push Notifications
+1. Back in the [Actions on Google console](https://console.actions.google.com) > under **Build** > **Actions**:
+1. Select the `tell_tip` intent > under **User engagement**:
+    + **Enable** `Would you like to offer daily updates to users?`
+    + Title: `Updates Alert` > **Save**
+1. Select the `tell_latest_tip` intent > under **User engagement**:
+    + **Enable** `Would you like to send push notifications? If yes, user permission will be needed`
+    + Title: `Push Notification Alert` > **Save**
 
-1. Go to the [Firebase console](https://console.firebase.google.com) and select the project that you have created on the Actions on Google console.
-1. Click the gear icon, then select *Project settings* > *SERVICE ACCOUNTS*.
-1. Generate a new private key and save it in the `functions` folder calling the file `service-account.json`.
-1. On the left navigation menu under *DEVELOP*, click on *Database*.
-1. Under *Cloud Firebase Beta*, click *Get Started*.
-1. Select *Start in test mode*, click *Enable*.
+#### Enable Actions API
+1. In the [Google Cloud Platform console](https://console.cloud.google.com/), select your *Project ID* from the dropdown
+1. From **Menu ☰** > **APIs & Services** > **Library** > select **Actions API** > **Enable**
+1. Under **Menu ☰** > **APIs & Services** > **Credentials** > **Create Credentials** > **Service Account Key**.
+1. From the dropdown, select **New Service Account**
+    + name:  `service-account`
+    + role:  **Project/Owner**
+    + key type: **JSON** > **Create**
+    + Your private JSON file will be downloaded to your local machine; save as service-account.json in functions/
 
-1. In the `functions` directory, deploy the fulfillment webhook provided in the functions folder using [Google Cloud Functions for Firebase](https://firebase.google.com/docs/functions/):
-   1. Follow the instructions to [set up and initialize Firebase SDK for Cloud Functions](https://firebase.google.com/docs/functions/get-started#set_up_and_initialize_functions_sdk). Make sure to select the project that you have previously generated in the Actions on Google Console and to reply `N` when asked to overwrite existing files by the Firebase CLI.
-   1. Run `npm install` to install dependencies.
-   1. Run `firebase deploy` and take note of the endpoint where the fulfillment webhook has been published. It should look like `Function URL (aogTips): https://${REGION}-${PROJECT}.cloudfunctions.net/aogTips`
-1. Go back to the Dialogflow console and select *Fulfillment* from the left navigation menu. Enable *Webhook*, set the value of *URL* to the `Function URL` from the previous step, then click *Save*.
+#### Firestore Database
+1. From the [Firebase console](https://console.firebase.google.com), find and select your Actions on Google Project ID
+1. In the left navigation menu under **Develop** section > **Database** > **Create database** button > Select **Start in test mode** > **Enable**
 
-1. To add tips to the newly created Firestore database, load in a browser `https://${REGION}-${PROJECT}.cloudfunctions.net/restoreTipsDB`.
-1. Go to the [Actions on Google console](https://console.actions.google.com).
-1. Follow the *Console Setup* instructions in the [Daily Updates](https://developers.google.com/actions/assistant/updates/daily) and the [Push Notifications](https://developers.google.com/actions/assistant/updates/notifications) documentation to enable daily updates and push notifications.
-1. Type `Talk to my test app` in the simulator, or say `OK Google, talk to my test app` to any Actions on Google enabled device signed into your developer account.
-1. To test daily updates, choose a category. After the tip, the app will show a suggestion chip to subscribe for daily updates.
-1. To test push notifications, choose to hear the latest tip. After the top, the app will show
-a suggestion chip to subscribe for push notifications. Add a new tip to the Firestore DB to trigger a notification to the subscribed users.
+#### Firebase Deployment
+1. On your local machine, in the `functions` directory, run `npm install`
+1. Run `firebase deploy --project {PROJECT_ID}` to deploy the function
+    + To find your **Project ID**: In [Dialogflow console](https://console.dialogflow.com/) under **Settings** ⚙ > **General** tab > **Project ID**.
 
-For more detailed information on deployment, see the [documentation](https://developers.google.com/actions/dialogflow/deploy-fulfillment).
+#### Dialogflow Console
+1. Return to the [Dialogflow Console](https://console.dialogflow.com) > select **Fulfillment** > **Enable** Webhook > Set **URL** to the **Function URL** that was returned after the deploy command > **SAVE**.
+    ```
+    Function URL (aogTips): https://${REGION}-${PROJECT_ID}.cloudfunctions.net/aogTips
+    ```
+1. In a browser, go to `https://${REGION}-${PROJECT}.cloudfunctions.net/restoreTipsDB`, to add data to the Firestore database.
+1. From the left navigation menu, click **Integrations** > **Integration Settings** under Google Assistant > Enable **Auto-preview changes** >  **Test** to open the Actions on Google simulator then say or type `Talk to my test app`.
+
+#### Push Notifications Configuration
+1. Then add a new tip to the Firestore Database to trigger a notification to the subscribed users. In the tips collection > select **Add document**:
+    + Document ID: select **Auto ID**
+    + field: `category`, type: string, value: `tools`
+    + field: `created_at`, type: string, value: `2019-04-29T011:00:00.000Z` (modify value to current date/time)
+    + field: `tip`, type: string, value: `Push notifications TEST`
+    + field: `url`, type: string, value: `https://developers.google.com/actions/assistant/updates/notifications`
+
+### Running this Sample
++ To test daily updates, choose a category and below the tip, there will be a `Send daily` suggestion chip to subscribe for daily updates.
++ To test push notifications, choose `most recent` and below the tip, there will be an `Alert me of new tips` suggestion chip to subscribe for push notifications. Then you will need to add a tip to Firestore DB to receive the push notification.
++ (Recommended) You can test your Action on any Google Assistant-enabled device on which the Assistant is signed into the same account used to create this project. Just say or type, “OK Google, talk to my test app”.
++ You can also use the Actions on Google Console simulator to test most features and preview on-device behavior.
+
+### Troubleshooting
++ If you come across issues when testing Daily Updates, we recommend going to the Actions console under **Build** > **Actions** > select the `tell_tip` intent to turn off Daily Updates toggle then Save, then turn on Daily updates toggle and Save.
++ When testing on an iOS device, ensure that notifications are enabled for Assistant under settings.
 
 ## References & Issues
 + Questions? Go to [StackOverflow](https://stackoverflow.com/questions/tagged/actions-on-google), [Assistant Developer Community on Reddit](https://www.reddit.com/r/GoogleAssistantDev/) or [Support](https://developers.google.com/actions/support/).
 + For bugs, please report an issue on Github.
 + Actions on Google [Documentation](https://developers.google.com/actions/extending-the-assistant)
-+ Actions on Google [Codelabs](https://codelabs.developers.google.com/?cat=Assistant).
-+ [Webhook Boilerplate Template](https://github.com/actions-on-google/dialogflow-webhook-boilerplate-nodejs) for Actions on Google.
- 
++ Actions on Google [Codelabs](https://codelabs.developers.google.com/?cat=Assistant)
++ [Webhook Boilerplate Template](https://github.com/actions-on-google/dialogflow-webhook-boilerplate-nodejs) for Actions on Google
+
 ## Make Contributions
 Please read and follow the steps in the [CONTRIBUTING.md](CONTRIBUTING.md).
- 
+
 ## License
 See [LICENSE](LICENSE).
- 
+
 ## Terms
 Your use of this sample is subject to, and by using or downloading the sample files you agree to comply with, the [Google APIs Terms of Service](https://developers.google.com/terms/).

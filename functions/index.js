@@ -207,7 +207,7 @@ exports.createTip = functions.firestore
   .document(`${FirestoreNames.TIPS}/{tipId}`)
   .onCreate((snap, context) => {
     const request = require('request');
-    const google = require('googleapis');
+    const { google } = require('googleapis');
     const serviceAccount = require('./service-account.json');
     const jwtClient = new google.auth.JWT(
       serviceAccount.client_email, null, serviceAccount.private_key,
