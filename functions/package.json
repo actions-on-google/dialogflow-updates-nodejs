@@ -1,6 +1,6 @@
 {
   "name": "dialogflow-updates",
-  "description": "A sample for the Actions on Google updates API.",
+  "description": "User Engagement Sample Action for the Assistant platform.",
   "version": "0.0.1",
   "private": true,
   "license": "Apache Version 2.0",
@@ -15,7 +15,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "actions-on-google": "^2.6.0",
+    "actions-on-google": "^2.7.0",
     "firebase-admin": "^7.2.0",
     "firebase-functions": "^2.2.1",
     "googleapis": "^39.2.0",

@@ -11,6 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+  * Best practices: Ask for daily updates and push notifications in a limited
+  * capacity for optimal user experience. In a production-ready app, you should
+  * be more sophisticated about this, i.e. re-ask after a certain period of time
+  * or number of interactions.
+  */
+
 'use strict';
 
 const {
@@ -53,7 +60,7 @@ const db = admin.firestore();
 
 const app = dialogflow({debug: true});
 
-// Retrieve and tell a tip from the database.
+// Retrieve data from database and tell a tip.
 app.intent('tell_tip', (conv, params) => {
   const category = params[Parameters.CATEGORY];
   let tipsRef = db.collection(FirestoreNames.TIPS);
@@ -65,11 +72,7 @@ app.intent('tell_tip', (conv, params) => {
       const tips = querySnapshot.docs;
       const tipIndex = Math.floor(Math.random() * tips.length);
       const tip = tips[tipIndex];
-      const screenOutput =
-        conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
-      if (!screenOutput) {
-        return conv.close(tip.get(FirestoreNames.TIP));
-      }
+
       conv.ask(tip.get(FirestoreNames.TIP));
       conv.ask(new BasicCard({
         text: tip.get(FirestoreNames.TIP),
@@ -78,12 +81,7 @@ app.intent('tell_tip', (conv, params) => {
           url: tip.get(FirestoreNames.URL),
         }),
       }));
-      /**
-       * We ask only once to show that this should be limited to avoid annoying
-       * the user. In a real world app you want to be more sophisticated about
-       * this, for example re-ask after a certain period of time or number of
-       * interactions.
-       */
+
       if (!conv.user.storage[DAILY_NOTIFICATION_ASKED]) {
         conv.ask(new Suggestions('Send daily'));
         conv.user.storage[DAILY_NOTIFICATION_ASKED] = true;
@@ -91,7 +89,7 @@ app.intent('tell_tip', (conv, params) => {
     });
 });
 
-// Retrieve and tell the most recently added tip
+// Retrieve data from database and tell a tip via push notification.
 app.intent('tell_latest_tip', (conv) => {
   return db.collection(FirestoreNames.TIPS)
     .orderBy(FirestoreNames.CREATED_AT, 'desc')
@@ -99,11 +97,7 @@ app.intent('tell_latest_tip', (conv) => {
     .get()
     .then((querySnapshot) => {
       const tip = querySnapshot.docs[0];
-      const screenOutput =
-        conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
-      if (!screenOutput) {
-        return conv.close(tip.get(FirestoreNames.TIP));
-      }
+
       conv.ask(tip.get(FirestoreNames.TIP));
       conv.ask(new BasicCard({
         text: tip.get(FirestoreNames.TIP),
@@ -112,12 +106,7 @@ app.intent('tell_latest_tip', (conv) => {
           url: tip.get(FirestoreNames.URL),
         }),
       }));
-      /**
-       * We ask only once to show that this should be limited to avoid annoying
-       * the user. In a real world app you want to be more sophisticated about
-       * this, for example re-ask after a certain period of time or number of
-       * interactions.
-       */
+
       if (!conv.user.storage[PUSH_NOTIFICATION_ASKED]) {
         conv.ask(new Suggestions('Alert me of new tips'));
         conv.user.storage[PUSH_NOTIFICATION_ASKED] = true;
@@ -125,10 +114,14 @@ app.intent('tell_latest_tip', (conv) => {
     });
 });
 
-// Welcome message
 app.intent('Default Welcome Intent', (conv) => {
-  // get available categories to show in the welcome message and in the
-  // suggestion chips.
+  // User engagement features aren't currently supported on speaker-only devices
+  // See docs: https://developers.google.com/actions/assistant/updates/overview
+  if (!conv.screen) {
+    return conv.close(`Hi! Welcome to Actions on Google Tips! To learn ` +
+      `about user engagement you will need to switch to a screened device.`);
+  }
+  // Get categories to show in the welcome message and in suggestions
   return db.collection(FirestoreNames.TIPS)
     .get()
     .then((querySnapshot) => {
@@ -140,16 +133,10 @@ app.intent('Default Welcome Intent', (conv) => {
         return array.indexOf(element) === index;
       });
       uniqueCategories.unshift(RECENT_TIP);
-      const welcomeMessage = `Hi! Welcome to Actions on Google Tips! ` +
-        `I can offer you tips for Actions on Google. You can choose to ` +
-        `hear the most recently added tip, or you can pick a category ` +
-        `from ${uniqueCategories.join(', ')}, or I can tell you a tip ` +
-        `from a randomly selected category.`;
-      const screenOutput =
-        conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
-      if (!screenOutput) {
-        return conv.ask(welcomeMessage);
-      }
+      const welcomeMessage = `Hi! Welcome to Actions on Google Tips! I can ` +
+        `offer you tips for Actions on Google. You can pick a category ` +
+        `from ${uniqueCategories.join(', ')}, or I can tell you a tip from ` +
+        `a randomly selected category.`;
       uniqueCategories.push(RANDOM_CATEGORY);
       conv.ask(welcomeMessage);
       conv.ask(new Suggestions(uniqueCategories));

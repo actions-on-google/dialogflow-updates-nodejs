@@ -1,6 +1,6 @@
 # Actions on Google: Daily Updates and Push Notifications Sample
 
-This sample demonstrates Actions on Google features for use on Google Assistant including [user engagement](https://developers.google.com/actions/assistant/updates/overview), specifically [daily updates](https://developers.google.com/actions/assistant/updates/daily) and [push notifications](https://developers.google.com/actions/assistant/updates/notifications) -- using the [Node.js client library](https://github.com/actions-on-google/actions-on-google-nodejs) and deployed on [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/).
+This sample demonstrates Actions on Google [user engagement](https://developers.google.com/actions/assistant/updates/overview) features for use on Google Assistant including [daily updates](https://developers.google.com/actions/assistant/updates/daily) and [push notifications](https://developers.google.com/actions/assistant/updates/notifications) -- using the [Node.js client library](https://github.com/actions-on-google/actions-on-google-nodejs) and deployed on [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/).
 
 ## Setup Instructions
 ### Prerequisites
@@ -16,16 +16,7 @@ This sample demonstrates Actions on Google features for use on Google Assistant 
 1. From the left navigation menu under **Build** > **Actions** > **Add Your First Action** > **BUILD** (this will bring you to the Dialogflow console) > Select language and time zone > **CREATE**.
 1. In the Dialogflow console, go to **Settings** ⚙ > **Export and Import** > **Restore from zip** using the `agent.zip` in this sample's directory.
 
-#### Daily Updates and Push Notifications
-1. Back in the [Actions on Google console](https://console.actions.google.com) > under **Build** > **Actions**:
-1. Select the `tell_tip` intent > under **User engagement**:
-    + **Enable** `Would you like to offer daily updates to users?`
-    + Title: `Updates Alert` > **Save**
-1. Select the `tell_latest_tip` intent > under **User engagement**:
-    + **Enable** `Would you like to send push notifications? If yes, user permission will be needed`
-    + Title: `Push Notification Alert` > **Save**
-
-#### Enable Actions API
+#### Cloud Platform Console
 1. In the [Google Cloud Platform console](https://console.cloud.google.com/), select your *Project ID* from the dropdown
 1. From **Menu ☰** > **APIs & Services** > **Library** > select **Actions API** > **Enable**
 1. Under **Menu ☰** > **APIs & Services** > **Credentials** > **Create Credentials** > **Service Account Key**.
@@ -33,7 +24,17 @@ This sample demonstrates Actions on Google features for use on Google Assistant 
     + name:  `service-account`
     + role:  **Project/Owner**
     + key type: **JSON** > **Create**
-    + Your private JSON file will be downloaded to your local machine; save as service-account.json in functions/
+    + Your private JSON file will be downloaded to your local machine
+1. Save private key as `service-account.json` in `functions/`
+
+#### Daily Updates and Push Notifications
+1. Back in the [Actions on Google console](https://console.actions.google.com) > under **Build** > **Actions**:
+1. Select the `tell_tip` intent > under **User engagement**:
+    + **Enable** `Would you like to offer daily updates to users?`
+    + Title: `advice Alert` > **Save**
+1. Select the `tell_latest_tip` intent > under **User engagement**:
+    + **Enable** `Would you like to send push notifications? If yes, user permission will be needed`
+    + Title: `latest info Alert` > **Save**
 
 #### Firestore Database
 1. From the [Firebase console](https://console.firebase.google.com), find and select your Actions on Google Project ID
@@ -51,23 +52,22 @@ This sample demonstrates Actions on Google features for use on Google Assistant 
     ```
 1. In a browser, go to `https://${REGION}-${PROJECT}.cloudfunctions.net/restoreTipsDB`, to add data to the Firestore database.
 1. From the left navigation menu, click **Integrations** > **Integration Settings** under Google Assistant > Enable **Auto-preview changes** >  **Test** to open the Actions on Google simulator then say or type `Talk to my test app`.
+    + To test daily updates, choose a category and below the tip, there will be a `Send daily` suggestion chip to subscribe for daily updates.
+    + To test push notifications, choose `most recent` and below the tip, there will be an `Alert me of new tips` suggestion chip to subscribe for push notifications. Then you will need to add a tip to Firestore DB to receive the push notification.
 
 #### Push Notifications Configuration
 1. Then add a new tip to the Firestore Database to trigger a notification to the subscribed users. In the tips collection > select **Add document**:
     + Document ID: select **Auto ID**
     + field: `category`, type: string, value: `tools`
-    + field: `created_at`, type: string, value: `2019-04-29T011:00:00.000Z` (modify value to current date/time)
-    + field: `tip`, type: string, value: `Push notifications TEST`
+    + field: `created_at`, type: string, value: `2019-04-29T015:00:00.000Z` and modify value to current date/time
+    + field: `tip`, type: string, value: `Here's the most recent info about tools`
     + field: `url`, type: string, value: `https://developers.google.com/actions/assistant/updates/notifications`
 
 ### Running this Sample
-+ To test daily updates, choose a category and below the tip, there will be a `Send daily` suggestion chip to subscribe for daily updates.
-+ To test push notifications, choose `most recent` and below the tip, there will be an `Alert me of new tips` suggestion chip to subscribe for push notifications. Then you will need to add a tip to Firestore DB to receive the push notification.
-+ (Recommended) You can test your Action on any Google Assistant-enabled device on which the Assistant is signed into the same account used to create this project. Just say or type, “OK Google, talk to my test app”.
++ You can test your Action on any Google Assistant-enabled device on which the Assistant is signed into the same account used to create this project. Just say or type, “OK Google, talk to my test app”.
 + You can also use the Actions on Google Console simulator to test most features and preview on-device behavior.
 
 ### Troubleshooting
-+ If you come across issues when testing Daily Updates, we recommend going to the Actions console under **Build** > **Actions** > select the `tell_tip` intent to turn off Daily Updates toggle then Save, then turn on Daily updates toggle and Save.
 + When testing on an iOS device, ensure that notifications are enabled for Assistant under settings.
 
 ## References & Issues
