@@ -12,8 +12,8 @@ This sample demonstrates Actions on Google [user engagement](https://developers.
 
 ### Configuration
 #### Actions Console
-1. From the [Actions on Google Console](https://console.actions.google.com/), add a new project > **Create Project** > under **More options** > **Conversational**
-1. From the left navigation menu under **Build** > **Actions** > **Add Your First Action** > **BUILD** (this will bring you to the Dialogflow console) > Select language and time zone > **CREATE**.
+1. From the [Actions on Google Console](https://console.actions.google.com/), New project > **Create project** > under **More options** > **Conversational**
+1. From the top menu under **Develop** > **Actions** (left nav) > **Add your first action** > **BUILD** (this will bring you to the Dialogflow console) > Select language and time zone > **CREATE**.
 1. In the Dialogflow console, go to **Settings** ⚙ > **Export and Import** > **Restore from zip** using the `agent.zip` in this sample's directory.
 
 #### Cloud Platform Console
@@ -28,7 +28,7 @@ This sample demonstrates Actions on Google [user engagement](https://developers.
 1. Save private key as `service-account.json` in `functions/`
 
 #### Daily Updates and Push Notifications
-1. Back in the [Actions on Google console](https://console.actions.google.com) > under **Build** > **Actions**:
+1. Back in the [Actions on Google console](https://console.actions.google.com) > under the top menu **Develop** > **Actions** (left nav):
 1. Select the `tell_tip` intent > under **User engagement**:
     + **Enable** `Would you like to offer daily updates to users?`
     + Title: `advice Alert` > **Save**
