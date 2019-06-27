@@ -121,6 +121,10 @@ app.intent('Default Welcome Intent', (conv) => {
     return conv.close(`Hi! Welcome to Actions on Google Tips! To learn ` +
       `about user engagement you will need to switch to a screened device.`);
   }
+  if (conv.user.verification !== 'VERIFIED') {
+    return conv.close('Hi! Welcome to Actions on Google Tips! To learn ' +
+      `about user engagement you'll need to be a verified user.`);
+  }
   // Get categories to show in the welcome message and in suggestions
   return db.collection(FirestoreNames.TIPS)
     .get()
@@ -194,7 +198,7 @@ exports.createTip = functions.firestore
   .document(`${FirestoreNames.TIPS}/{tipId}`)
   .onCreate((snap, context) => {
     const request = require('request');
-    const { google } = require('googleapis');
+    const {google} = require('googleapis');
     const serviceAccount = require('./service-account.json');
     const jwtClient = new google.auth.JWT(
       serviceAccount.client_email, null, serviceAccount.private_key,
