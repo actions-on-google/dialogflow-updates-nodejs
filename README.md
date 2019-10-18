@@ -1,12 +1,12 @@
 # Actions on Google: Daily Updates and Push Notifications Sample
 
-This sample demonstrates Actions on Google [user engagement](https://developers.google.com/actions/assistant/updates/overview) features for use on Google Assistant including [daily updates](https://developers.google.com/actions/assistant/updates/daily) and [push notifications](https://developers.google.com/actions/assistant/updates/notifications) -- using the [Node.js client library](https://github.com/actions-on-google/actions-on-google-nodejs) and deployed on [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/).
+This sample demonstrates Actions on Google [user engagement](https://developers.google.com/assistant/engagement) features for use on Google Assistant including [daily updates](https://developers.google.com/assistant/engagement/daily) and [push notifications](https://developers.google.com/assistant/engagement/notifications) -- using the [Node.js client library](https://github.com/actions-on-google/actions-on-google-nodejs) and deployed on [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/).
 
 ## Setup Instructions
 ### Prerequisites
 1. Node.js and NPM
     + We recommend installing using [NVM](https://github.com/creationix/nvm)
-1. Install the [Firebase CLI](https://developers.google.com/actions/dialogflow/deploy-fulfillment)
+1. Install the [Firebase CLI](https://developers.google.com/assistant/actions/dialogflow/deploy-fulfillment)
     + We recommend using version 6.5.0, `npm install -g firebase-tools@6.5.0`
     + Run `firebase login` with your Google account
 
@@ -71,9 +71,9 @@ This sample demonstrates Actions on Google [user engagement](https://developers.
 + When testing on an iOS device, ensure that notifications are enabled for Assistant under settings.
 
 ## References & Issues
-+ Questions? Go to [StackOverflow](https://stackoverflow.com/questions/tagged/actions-on-google), [Assistant Developer Community on Reddit](https://www.reddit.com/r/GoogleAssistantDev/) or [Support](https://developers.google.com/actions/support/).
++ Questions? Go to [StackOverflow](https://stackoverflow.com/questions/tagged/actions-on-google), [Assistant Developer Community on Reddit](https://www.reddit.com/r/GoogleAssistantDev/) or [Support](https://developers.google.com/assistant/support).
 + For bugs, please report an issue on Github.
-+ Actions on Google [Documentation](https://developers.google.com/actions/extending-the-assistant)
++ Actions on Google [Documentation](https://developers.google.com/assistant)
 + Actions on Google [Codelabs](https://codelabs.developers.google.com/?cat=Assistant)
 + [Webhook Boilerplate Template](https://github.com/actions-on-google/dialogflow-webhook-boilerplate-nodejs) for Actions on Google
 
