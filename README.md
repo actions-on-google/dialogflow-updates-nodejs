@@ -1,5 +1,9 @@
 # Actions on Google: Daily Updates and Push Notifications Sample
 
+*:warning: Warning: Conversational Actions will be deprecated on June 13, 2023. For more information,
+see [Conversational Actions Sunset](https://goo.gle/ca-sunset).*
+
+
 This sample demonstrates Actions on Google [user engagement](https://developers.google.com/assistant/engagement) features for use on Google Assistant including [daily updates](https://developers.google.com/assistant/engagement/daily) and [push notifications](https://developers.google.com/assistant/engagement/notifications) -- using the [Node.js client library](https://github.com/actions-on-google/actions-on-google-nodejs) and deployed on [Cloud Functions for Firebase](https://firebase.google.com/docs/functions/).
 
 
